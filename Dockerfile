@@ -12,10 +12,9 @@ RUN apt update \
     && apt -y upgrade \
     && apt -y install software-properties-common wget git curl jq \
     && add-apt-repository ppa:transmissionbt/ppa \
-    && wget -O - https://swupdate.openvpn.net/repos/repo-public.gpg | apt-key add - \
-    && echo "deb http://build.openvpn.net/debian/openvpn/stable xenial main" > /etc/apt/sources.list.d/openvpn-aptrepo.list \
+    && add-apt-repository ppa:wireguard/wireguard \
     && apt update \
-    && apt install -y sudo transmission-cli transmission-common transmission-daemon curl rar unrar zip unzip ufw iputils-ping openvpn bc tzdata \
+    && apt install -y sudo transmission-cli transmission-common transmission-daemon curl rar unrar zip unzip ufw iputils-ping wireguard bc tzdata \
     python2.7 python2.7-pysqlite2 && ln -sf /usr/bin/python2.7 /usr/bin/python2 \
     && wget https://github.com/Secretmapper/combustion/archive/release.zip \
     && unzip release.zip -d /opt/transmission-ui/ \
@@ -37,7 +36,7 @@ RUN apt update \
     && useradd -u 911 -U -d /config -s /bin/false abc \
     && usermod -G users abc
 
-ADD openvpn/ /etc/openvpn/
+ADD wireguard/ /etc/wireguard/
 ADD transmission/ /etc/transmission/
 ADD tinyproxy /opt/tinyproxy/
 ADD scripts /etc/scripts/
